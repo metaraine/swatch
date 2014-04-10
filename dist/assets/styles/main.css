@@ -1,0 +1,10 @@
+body {
+  font-family: Helvetica, Sans-Serif;
+  font-weight: 300;
+  font-size: 18px;
+  background-color: #fff;
+  margin: 0; }
+
+.color {
+  line-height: 192px;
+  padding-left: 3em; }

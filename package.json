@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "swatch",
   "repository": "",
+  "scripts": {
+    "start": "node app.js"
+  },
   "devDependencies": {
     "gulp": "~3",
     "gulp-rename": "~1",

@@ -25,30 +25,30 @@ server = lr()
 config =
 	http_port: '1337'
 	livereload_port: '35729'
-	startpage: 'dist/index.html'
+	startpage: 'public/index.html'
 	
 	# html
 	src_html: 'app/**/*.html'
 	
 	# styles
 	src_sass: 'app/assets/styles/**/*.scss'
-	dest_css: 'dist/assets/styles'
+	dest_css: 'public/assets/styles'
 	
 	# scripts
 	src_scripts: 'app/assets/scripts/**/*'
 	src_coffee: 'app/assets/scripts/**/*.coffee'
 	src_js: 'app/assets/scripts/**/*.js'
-	dest_js: 'dist/assets/scripts'
+	dest_js: 'public/assets/scripts'
 	js_concat_target: 'main.js'
 	
 	# plugins
 	src_plugins: 'app/assets/scripts/plugins/*.js'
-	dest_plugins: 'dist/assets/scripts'
+	dest_plugins: 'public/assets/scripts'
 	plugins_concat: 'plugins.js'
 	
 	# images
 	src_img: 'app/assets/images/**/*.*'
-	dest_img: 'dist/assets/images'
+	dest_img: 'public/assets/images'
 
 
 # sass task
@@ -106,13 +106,13 @@ gulp.task 'images', ->
 gulp.task 'html', ->
 	gulp.src(config.src_html)
 		.pipe(embedlr())
-		.pipe(gulp.dest('dist/'))
+		.pipe(gulp.dest('public/'))
 		.pipe livereload(server)
 
 
-# clean '.dist/'
+# clean '.public/'
 gulp.task 'clean', ->
-	gulp.src(['./dist/**/*.*'],
+	gulp.src(['./public/**/*.*'],
 		read: true
 	)
 	.pipe clean()
@@ -136,7 +136,7 @@ gulp.task 'default', (callback) ->
 		'html'
 	], 'open', callback
 	server.listen config.livereload_port
-	http.createServer(ecstatic(root: 'dist/')).listen config.http_port
+	http.createServer(ecstatic(root: 'public/')).listen config.http_port
 
 	gulp.watch(config.src_sass, ['styles'])._watcher.on 'all', livereload
 	gulp.watch(config.src_plugins, ['plugins'])._watcher.on 'all', livereload

@@ -699,7 +699,9 @@ var colors = [{
 	rgb: { r: 0, g: 0, b: 0 }
 }];
 (function() {
-  var color, colorEl, isLight, luma, _i, _len;
+  var attachEventHandlers, componentNames, getBaseColor, isComponent, isLight, luma, render;
+
+  componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale'];
 
   isLight = function(rgb) {
     return luma(rgb >= 165);
@@ -709,12 +711,47 @@ var colors = [{
     return 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
   };
 
-  for (_i = 0, _len = colors.length; _i < _len; _i++) {
-    color = colors[_i];
-    colorEl = $("<div class='color'>" + color.name + "</div>").css({
-      backgroundColor: color.name
-    }).addClass(isLight(color.rgb) ? '.text-dark' : '.text-light');
-    $('#colors').append(colorEl);
-  }
+  isComponent = function(color) {
+    return _.some(componentNames, function(component) {
+      return _.contains(color.name, component);
+    }) && _.contains(colors, getBaseColor(color));
+  };
+
+  getBaseColor = function(color) {
+    return color.replace(new RegExp(componentNames.join('|'), 'g'), '');
+  };
+
+  attachEventHandlers = function() {
+    return $('#option-groupbyname').on('click', function() {
+      console.log('test');
+      return false;
+    });
+  };
+
+  render = function() {
+    var color, colorEl, colorgroups, _i, _len, _results;
+    colorgroups = _.groupBy(colors, function(color) {
+      if (isComponent(color)) {
+        return getBaseColor(color.name);
+      } else {
+        return color.name;
+      }
+    });
+    console.log(colorgroups);
+    _results = [];
+    for (_i = 0, _len = colors.length; _i < _len; _i++) {
+      color = colors[_i];
+      colorEl = $("<div class='color'>" + color.name + "</div>").css({
+        backgroundColor: color.name
+      }).addClass(isLight(color.rgb) ? '.text-dark' : '.text-light');
+      _results.push($('#colors').append(colorEl));
+    }
+    return _results;
+  };
+
+  $(function() {
+    render();
+    return attachEventHandlers();
+  });
 
 }).call(this);

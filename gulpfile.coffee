@@ -23,7 +23,7 @@ lr =           require('tiny-lr')
 server = lr()
 
 config =
-	http_port: '1337'
+	http_port: '3255'
 	livereload_port: '35729'
 	startpage: 'public/index.html'
 	

@@ -1,3 +1,11 @@
+/*************************
+ * DEFAULTS
+ *************************/
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
 body {
   font-family: Helvetica, Sans-Serif;
   font-weight: 300;
@@ -5,6 +13,18 @@ body {
   background-color: #fff;
   margin: 0; }
 
+/*************************
+ * HELPERS
+ *************************/
+/*************************
+ * COMPONENTS
+ *************************/
 .color {
-  line-height: 192px;
+  line-height: 25vh;
   padding-left: 3em; }
+
+.text-light {
+  color: #eee; }
+
+.text-dark {
+  color: #111; }

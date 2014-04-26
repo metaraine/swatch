@@ -1,13 +1,3 @@
-function isLight(rgb)
-{
-	return luma(rgb) >= 165;
-}
-
-function luma(rgb)
-{
-	return 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b; // SMPTE C, Rec. 709 weightings
-}
-
 var colors = [{
 	name: 'Lavender',
 	hex: 	'E6E6FA',
@@ -709,14 +699,21 @@ var colors = [{
 	rgb: { r: 0, g: 0, b: 0 }
 }];
 (function() {
-  var color, colorEl, _i, _len;
+  var color, colorEl, isLight, luma, _i, _len;
+
+  isLight = function(rgb) {
+    return luma(rgb >= 165);
+  };
+
+  luma = function(rgb) {
+    return 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
+  };
 
   for (_i = 0, _len = colors.length; _i < _len; _i++) {
     color = colors[_i];
     colorEl = $("<div class='color'>" + color.name + "</div>").css({
-      backgroundColor: color.name,
-      color: isLight(color.rgb) ? '#111' : '#eee'
-    });
+      backgroundColor: color.name
+    }).addClass(isLight(color.rgb) ? '.text-dark' : '.text-light');
     $('#colors').append(colorEl);
   }
 

@@ -1,13 +1,3 @@
-function isLight(rgb)
-{
-	return luma(rgb) >= 165;
-}
-
-function luma(rgb)
-{
-	return 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b; // SMPTE C, Rec. 709 weightings
-}
-
 var colors = [{
 	name: 'Lavender',
 	hex: 	'E6E6FA',

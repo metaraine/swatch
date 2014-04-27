@@ -699,10 +699,10 @@ var colors = [{
 	rgb: { r: 0, g: 0, b: 0 }
 }];
 (function() {
-  var componentNames, getBaseColor, isComponent, isLight, luma, _;
+  var ColorOps, componentNames, getBaseColor, isComponent, isLight, luma;
 
   if ((typeof _ === "undefined" || _ === null) && (typeof require !== "undefined" && require !== null)) {
-    _ = require('lodash');
+    _ = require('lodash');;
   }
 
   componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale'];
@@ -716,7 +716,7 @@ var colors = [{
   };
 
   isComponent = function(colorName) {
-    return _.some(componentNames, function(component) {
+    return componentNames.some(function(component) {
       return _.contains(colorName.toLowerCase(), component);
     });
   };
@@ -725,14 +725,18 @@ var colors = [{
     return color.replace(new RegExp(componentNames.join('|'), 'gi'), '');
   };
 
+  ColorOps = {
+    componentNames: componentNames,
+    isLight: isLight,
+    luma: luma,
+    isComponent: isComponent,
+    getBaseColor: getBaseColor
+  };
+
   if (typeof module !== "undefined" && module !== null) {
-    module.exports = {
-      componentNames: componentNames,
-      isLight: isLight,
-      luma: luma,
-      isComponent: isComponent,
-      getBaseColor: getBaseColor
-    };
+    module.exports = ColorOps;
+  } else {
+    window.ColorOps = ColorOps;
   }
 
 }).call(this);
@@ -748,27 +752,30 @@ var colors = [{
   };
 
   baseExists = function(colorName) {
-    return _.contains(colors, getBaseColor(colorName));
+    return _.contains(colors, ColorOps.getBaseColor(colorName));
   };
 
   render = function() {
-    var color, colorEl, colorgroups, _i, _len, _results;
+    var color, colorEl, colorgroups, group, groupEl, name, _i, _len, _results;
     colorgroups = _.groupBy(colors, function(color) {
-      console.log('color', color.name, isComponent(color.name));
-      if (isComponent(color.name)) {
-        return getBaseColor(color.name);
+      if (ColorOps.isComponent(color.name)) {
+        return ColorOps.getBaseColor(color.name);
       } else {
         return color.name;
       }
     });
-    console.log(colorgroups);
     _results = [];
-    for (_i = 0, _len = colors.length; _i < _len; _i++) {
-      color = colors[_i];
-      colorEl = $("<div class='color'>" + color.name + "</div>").css({
-        backgroundColor: color.name
-      }).addClass(isLight(color.rgb) ? '.text-dark' : '.text-light');
-      _results.push($('#colors').append(colorEl));
+    for (name in colorgroups) {
+      group = colorgroups[name];
+      groupEl = $("<div class='horizontal-group'>");
+      for (_i = 0, _len = group.length; _i < _len; _i++) {
+        color = group[_i];
+        colorEl = $("<div class='color'>" + color.name + "</div>").css({
+          backgroundColor: color.name
+        }).addClass(ColorOps.isLight(color.rgb) ? '.text-dark' : '.text-light');
+        groupEl.append(colorEl);
+      }
+      _results.push($('#colors').append(groupEl));
     }
     return _results;
   };

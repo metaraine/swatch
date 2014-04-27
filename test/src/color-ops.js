@@ -1,8 +1,8 @@
 (function() {
-  var componentNames, getBaseColor, isComponent, isLight, luma, _;
+  var ColorOps, componentNames, getBaseColor, isComponent, isLight, luma;
 
   if ((typeof _ === "undefined" || _ === null) && (typeof require !== "undefined" && require !== null)) {
-    _ = require('lodash');
+    _ = require('lodash');;
   }
 
   componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale'];
@@ -16,7 +16,7 @@
   };
 
   isComponent = function(colorName) {
-    return _.some(componentNames, function(component) {
+    return componentNames.some(function(component) {
       return _.contains(colorName.toLowerCase(), component);
     });
   };
@@ -25,14 +25,18 @@
     return color.replace(new RegExp(componentNames.join('|'), 'gi'), '');
   };
 
+  ColorOps = {
+    componentNames: componentNames,
+    isLight: isLight,
+    luma: luma,
+    isComponent: isComponent,
+    getBaseColor: getBaseColor
+  };
+
   if (typeof module !== "undefined" && module !== null) {
-    module.exports = {
-      componentNames: componentNames,
-      isLight: isLight,
-      luma: luma,
-      isComponent: isComponent,
-      getBaseColor: getBaseColor
-    };
+    module.exports = ColorOps;
+  } else {
+    window.ColorOps = ColorOps;
   }
 
 }).call(this);

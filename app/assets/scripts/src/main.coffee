@@ -1,50 +1,45 @@
-componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale']
-
-isLight = (rgb)->
-	luma rgb >= 165
-
-luma = (rgb)->
-	0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b; # SMPTE C, Rec. 709 weightings
-
-isComponent = (color)->
-	_.some(componentNames, (component)->
-		_.contains color.name, component
-	) and 
-	_.contains colors, getBaseColor color
-
-getBaseColor = (color)->
-	return color.replace new RegExp(componentNames.join('|'), 'g'), ''
-
 attachEventHandlers = ()->
 
 	# toggle settings panel
 	$('#settings-toggle').on 'click', ()->
 		$('#settings-panel').fadeToggle();
 		$('#content').toggleClass('fade');
-		falsennnu
+		false
 
 	# click outside settings panel to dismiss
 	# $(document).on 'click', (e)->
 		# console.log this, e.target, e.srcElement
 
+baseExists = (colorName)->
+	_.contains colors, ColorOps.getBaseColor colorName
+
 render = ()->
 
+	# TODO: fix luma
+	# TODO: sort base name first within group
+	# TODO: sort single groups before multi groups
+
+	# group the colors by base name
 	colorgroups = _.groupBy colors, (color)->
-		if isComponent color
-			getBaseColor color.name
+		if ColorOps.isComponent color.name
+			ColorOps.getBaseColor color.name
 		else
 			color.name
 
-	console.log colorgroups
+	# create a horizontal group for each base name
+	for name of colorgroups
+		group = colorgroups[name]
+		groupEl = $("<div class='horizontal-group'>");
 
-	for color in colors
+		# add individual colors to horizontal group
+		for color in group
+			colorEl = $("<div class='color'>#{color.name}</div>")
+				.css 
+					backgroundColor: color.name
+				.addClass if ColorOps.isLight color.rgb then '.text-dark' else '.text-light'
+			groupEl.append colorEl
 
-		colorEl = $("<div class='color'>#{color.name}</div>")
-			.css 
-				backgroundColor: color.name
-			.addClass if isLight color.rgb then '.text-dark' else '.text-light'
-
-		$('#colors').append colorEl
+		$('#colors').append groupEl
 
 
 $ ()->

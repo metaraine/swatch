@@ -16,10 +16,16 @@ getBaseColor = (color)->
 	return color.replace new RegExp(componentNames.join('|'), 'g'), ''
 
 attachEventHandlers = ()->
-	$('#option-groupbyname').on 'click', ()->
-		console.log 'test'
 
-		false
+	# toggle settings panel
+	$('#settings-toggle').on 'click', ()->
+		$('#settings-panel').fadeToggle();
+		$('#content').toggleClass('fade');
+		falsennnu
+
+	# click outside settings panel to dismiss
+	# $(document).on 'click', (e)->
+		# console.log this, e.target, e.srcElement
 
 render = ()->
 

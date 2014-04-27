@@ -722,9 +722,10 @@ var colors = [{
   };
 
   attachEventHandlers = function() {
-    return $('#option-groupbyname').on('click', function() {
-      console.log('test');
-      return false;
+    return $('#settings-toggle').on('click', function() {
+      $('#settings-panel').fadeToggle();
+      $('#content').toggleClass('fade');
+      return falsennnu;
     });
   };
 

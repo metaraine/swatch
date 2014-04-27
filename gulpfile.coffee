@@ -39,6 +39,7 @@ config =
 	src_coffee: 'app/assets/scripts/**/*.coffee'
 	src_js: 'app/assets/scripts/**/*.js'
 	dest_js: 'public/assets/scripts'
+	dest_test: 'test'
 	js_concat_target: 'main.js'
 	
 	# plugins
@@ -70,6 +71,8 @@ gulp.task 'scripts', ->
 		gulp.src(config.src_js),
 		gulp.src(config.src_coffee)
 			.pipe(coffee().on('error', gutil.log))
+			# save compiled coffeescript to /test for unit testing
+			.pipe(gulp.dest(config.dest_test))
 	)
 	.pipe(jshint())
 	.pipe(jshint.reporter('default'))

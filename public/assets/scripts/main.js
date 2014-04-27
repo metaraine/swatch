@@ -699,7 +699,11 @@ var colors = [{
 	rgb: { r: 0, g: 0, b: 0 }
 }];
 (function() {
-  var attachEventHandlers, componentNames, getBaseColor, isComponent, isLight, luma, render;
+  var componentNames, getBaseColor, isComponent, isLight, luma, _;
+
+  if ((typeof _ === "undefined" || _ === null) && (typeof require !== "undefined" && require !== null)) {
+    _ = require('lodash');
+  }
 
   componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale'];
 
@@ -711,15 +715,30 @@ var colors = [{
     return 0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b;
   };
 
-  isComponent = function(color) {
+  isComponent = function(colorName) {
     return _.some(componentNames, function(component) {
-      return _.contains(color.name, component);
-    }) && _.contains(colors, getBaseColor(color));
+      return _.contains(colorName.toLowerCase(), component);
+    });
   };
 
   getBaseColor = function(color) {
-    return color.replace(new RegExp(componentNames.join('|'), 'g'), '');
+    return color.replace(new RegExp(componentNames.join('|'), 'gi'), '');
   };
+
+  if (typeof module !== "undefined" && module !== null) {
+    module.exports = {
+      componentNames: componentNames,
+      isLight: isLight,
+      luma: luma,
+      isComponent: isComponent,
+      getBaseColor: getBaseColor
+    };
+  }
+
+}).call(this);
+
+(function() {
+  var attachEventHandlers, baseExists, render;
 
   attachEventHandlers = function() {
     return $('#option-groupbyname').on('click', function() {
@@ -728,10 +747,15 @@ var colors = [{
     });
   };
 
+  baseExists = function(colorName) {
+    return _.contains(colors, getBaseColor(colorName));
+  };
+
   render = function() {
     var color, colorEl, colorgroups, _i, _len, _results;
     colorgroups = _.groupBy(colors, function(color) {
-      if (isComponent(color)) {
+      console.log('color', color.name, isComponent(color.name));
+      if (isComponent(color.name)) {
         return getBaseColor(color.name);
       } else {
         return color.name;

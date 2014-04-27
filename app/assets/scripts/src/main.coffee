@@ -1,30 +1,16 @@
-componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale']
-
-isLight = (rgb)->
-	luma rgb >= 165
-
-luma = (rgb)->
-	0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b; # SMPTE C, Rec. 709 weightings
-
-isComponent = (color)->
-	_.some(componentNames, (component)->
-		_.contains color.name, component
-	) and 
-	_.contains colors, getBaseColor color
-
-getBaseColor = (color)->
-	return color.replace new RegExp(componentNames.join('|'), 'g'), ''
-
 attachEventHandlers = ()->
 	$('#option-groupbyname').on 'click', ()->
 		console.log 'test'
-
 		false
+
+baseExists = (colorName)->
+	_.contains colors, getBaseColor colorName
 
 render = ()->
 
 	colorgroups = _.groupBy colors, (color)->
-		if isComponent color
+		console.log 'color', color.name, isComponent color.name
+		if isComponent color.name
 			getBaseColor color.name
 		else
 			color.name

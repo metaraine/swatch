@@ -2,8 +2,9 @@
   var attachEventHandlers, baseExists, render;
 
   attachEventHandlers = function() {
-    return $('#option-groupbyname').on('click', function() {
-      console.log('test');
+    return $('#settings-toggle').on('click', function() {
+      $('#settings-panel').fadeToggle();
+      $('#content').toggleClass('fade');
       return false;
     });
   };
@@ -24,7 +25,7 @@
     _results = [];
     for (name in colorgroups) {
       group = colorgroups[name];
-      groupEl = $("<div class='horizontal-group'>");
+      groupEl = $("<div class='cols'>");
       for (_i = 0, _len = group.length; _i < _len; _i++) {
         color = group[_i];
         colorEl = $("<div class='color'>" + color.name + "</div>").css({

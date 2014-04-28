@@ -62,12 +62,12 @@ a {
 .text-dark {
   color: #111; }
 
-.horizontal-group {
+.cols {
   width: 100%;
   display: table;
   table-layout: fixed; }
 
-.horizontal-group > * {
+.cols > * {
   display: table-cell;
   width: 1%; }
 

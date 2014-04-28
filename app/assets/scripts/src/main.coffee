@@ -29,7 +29,7 @@ render = ()->
 	# create a horizontal group for each base name
 	for name of colorgroups
 		group = colorgroups[name]
-		groupEl = $("<div class='horizontal-group'>");
+		groupEl = $("<div class='cols'>");
 
 		# add individual colors to horizontal group
 		for color in group

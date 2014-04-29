@@ -3,7 +3,7 @@ attachEventHandlers = ()->
 	# toggle settings panel
 	$('#settings-toggle').on 'click', ()->
 		$('#settings-panel').fadeToggle();
-		$('#content').toggleClass('fade');
+		$('#content').toggleClass('backfade');
 		false
 
 	# click outside settings panel to dismiss
@@ -29,7 +29,7 @@ render = ()->
 
 		# add individual colors to horizontal group
 		for color in group
-			colorEl = $("<div class='color'>#{color.name}</div>")
+			colorEl = $("<div class='color'><span class='color-text'>#{color.name}</span></div>")
 				.css 
 					backgroundColor: color.name
 				.addClass if ColorOps.isLight color.rgb then 'text-dark' else 'text-light'

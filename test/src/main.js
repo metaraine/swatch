@@ -4,7 +4,7 @@
   attachEventHandlers = function() {
     return $('#settings-toggle').on('click', function() {
       $('#settings-panel').fadeToggle();
-      $('#content').toggleClass('fade');
+      $('#content').toggleClass('backfade');
       return false;
     });
   };
@@ -28,7 +28,7 @@
       groupEl = $("<div class='cols'>");
       for (_i = 0, _len = group.length; _i < _len; _i++) {
         color = group[_i];
-        colorEl = $("<div class='color'>" + color.name + "</div>").css({
+        colorEl = $("<div class='color'><span class='color-text'>" + color.name + "</span></div>").css({
           backgroundColor: color.name
         }).addClass(ColorOps.isLight(color.rgb) ? 'text-dark' : 'text-light');
         groupEl.append(colorEl);

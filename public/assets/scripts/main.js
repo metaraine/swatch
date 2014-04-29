@@ -705,10 +705,10 @@ var colors = [{
     _ = require('lodash');;
   }
 
-  componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale'];
+  componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale', 'hot', 'drab'];
 
   isLight = function(rgb) {
-    return luma(rgb >= 165);
+    return luma(rgb) >= 150;
   };
 
   luma = function(rgb) {
@@ -773,7 +773,7 @@ var colors = [{
         color = group[_i];
         colorEl = $("<div class='color'>" + color.name + "</div>").css({
           backgroundColor: color.name
-        }).addClass(ColorOps.isLight(color.rgb) ? '.text-dark' : '.text-light');
+        }).addClass(ColorOps.isLight(color.rgb) ? 'text-dark' : 'text-light');
         groupEl.append(colorEl);
       }
       _results.push($('#colors').append(groupEl));

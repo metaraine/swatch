@@ -5,10 +5,10 @@
     _ = require('lodash');;
   }
 
-  componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale'];
+  componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale', 'hot', 'drab'];
 
   isLight = function(rgb) {
-    return luma(rgb >= 165);
+    return luma(rgb) >= 150;
   };
 
   luma = function(rgb) {

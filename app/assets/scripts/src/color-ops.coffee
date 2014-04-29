@@ -1,10 +1,10 @@
 if not _? and require?
 	`_ = require('lodash');`
 
-componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale']
+componentNames = ['light', 'medium', 'dark', 'deep', 'dim', 'pale', 'hot', 'drab']
 
 isLight = (rgb)->
-	luma rgb >= 165
+	luma(rgb) >= 150
 
 luma = (rgb)->
 	0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b # SMPTE C, Rec. 709 weightings

@@ -30,7 +30,7 @@
         color = group[_i];
         colorEl = $("<div class='color'>" + color.name + "</div>").css({
           backgroundColor: color.name
-        }).addClass(ColorOps.isLight(color.rgb) ? '.text-dark' : '.text-light');
+        }).addClass(ColorOps.isLight(color.rgb) ? 'text-dark' : 'text-light');
         groupEl.append(colorEl);
       }
       _results.push($('#colors').append(groupEl));

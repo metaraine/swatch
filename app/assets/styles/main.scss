@@ -30,8 +30,8 @@ a {
 .text-right { text-align: right; }
 .set-apart-1 { margin: 10px; }
 .hide { display: none; }
-.narrow { margin: 0 auto; width: 800px; }
-.narrower { margin: 0 auto; width: 600px; }
+.narrow { margin: 0 auto; max-width: 800px; }
+.narrower { margin: 0 auto; max-width: 600px; }
 .transition { transition: all 2s; }
 
 /*************************
@@ -106,5 +106,6 @@ a {
 .color {
 	line-height: 25vh;
 	padding-left: 3em;
+	overflow: hidden; // don't let the content overflow on small devices
 }
 
